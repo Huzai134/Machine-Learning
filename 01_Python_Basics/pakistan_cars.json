@@ -1,0 +1,20 @@
+[
+    {
+        "brand": "Toyota",
+        "model": "Corolla",
+        "units_sold": 45000,
+        "city": "Karachi"
+    },
+    {
+        "brand": "Suzuki",
+        "model": "Alto",
+        "units_sold": 82000,
+        "city": "Lahore"
+    },
+    {
+        "brand": "Honda",
+        "model": "Civic",
+        "units_sold": 18000,
+        "city": "Islamabad"
+    }
+]
