@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware  
 from pydantic import BaseModel
 import joblib
 import pandas as pd
@@ -6,8 +7,18 @@ import pandas as pd
 # 1. Start the API app
 app = FastAPI(title="Twin Cities Real Estate AI API")
 
-# 2. Load the frozen AI brain we just trained on real Zameen data
-model = joblib.load("05_Machine_Learning/real_estate_model.pkl")
+
+# Tell the server to accept requests from our HTML file -->
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows any website to connect
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# The ../ tells Linux to go UP one folder to find the ML files
+model = joblib.load("../05_Machine_Learning/real_estate_model.pkl")
 
 # 3. Define what a "House" looks like so the API knows what data to expect
 class House(BaseModel):
