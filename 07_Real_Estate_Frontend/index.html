@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Property Valuation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 5px; }
+        p { color: #7f8c8d; margin-bottom: 30px; font-size: 14px; }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { font-weight: bold; color: #34495e; display: block; margin-bottom: 5px; }
+        input { 
+            width: 100%; padding: 12px; border: 1px solid #bdc3c7; 
+            border-radius: 6px; box-sizing: border-box; font-size: 16px;
+        }
+        
+        button {
+            width: 100%; padding: 14px; background-color: #27ae60; 
+            color: white; border: none; border-radius: 6px; 
+            font-size: 16px; font-weight: bold; cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #2ecc71; }
+        
+        #result-box {
+            margin-top: 30px; padding: 20px; background-color: #ecf0f1;
+            border-radius: 6px; display: none;
+        }
+        #price-text { font-size: 28px; font-weight: bold; color: #2c3e50; margin: 10px 0 0 0; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Twin Cities Real Estate AI</h2>
+        <p>Enter property details for an instant market valuation.</p>
+
+        <div class="input-group">
+            <label>Area (in Marla)</label>
+            <input type="number" id="marlaInput" placeholder="e.g., 10">
+        </div>
+
+        <div class="input-group">
+            <label>Number of Bedrooms</label>
+            <input type="number" id="bedInput" placeholder="e.g., 5">
+        </div>
+
+        <button onclick="predictPrice()">Calculate Price</button>
+
+        <div id="result-box">
+            <div style="color: #7f8c8d; font-size: 14px;">Estimated Market Value</div>
+            <h3 id="price-text">...</h3>
+        </div>
+    </div>
+
+    <script>
+        async function predictPrice() {
+            // 1. Get the numbers the user typed in
+            const marla = document.getElementById("marlaInput").value;
+            const beds = document.getElementById("bedInput").value;
+
+            // 2. Make sure they actually typed something
+            if (!marla || !beds) {
+                alert("Please enter both Marla and Bedrooms!");
+                return;
+            }
+
+            // 3. Show the result box with a loading message
+            document.getElementById("result-box").style.display = "block";
+            document.getElementById("price-text").innerText = "Calculating...";
+
+            try {
+                // 4. Send the data to your Python FastAPI Server
+                const response = await fetch("http://127.0.0.1:8000/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        area_marla: parseFloat(marla),
+                        bedrooms: parseInt(beds)
+                    })
+                });
+
+                // 5. Read the answer from the AI
+                const data = await response.json();
+
+                // 6. Format the number with commas (e.g., 54,949,431)
+                const formattedPrice = data.predicted_price_pkr.toLocaleString();
+                
+                // 7. Update the screen with the final price!
+                document.getElementById("price-text").innerText = formattedPrice + " PKR";
+
+            } catch (error) {
+                document.getElementById("price-text").innerText = "Server Error";
+                console.error("Make sure your Python server is running!", error);
+            }
+        }
+    </script>
+
+</body>
+</html>
