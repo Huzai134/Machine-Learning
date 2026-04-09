@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+import joblib
 
 print("--- 1. LOADING DATA ---")
 # 1. Get our historical data
@@ -36,3 +37,8 @@ predicted_price = ai_model.predict(new_house)
 
 print(f"Client House Details: 15 Marla, 3 Bedrooms")
 print(f"AI Recommended Price: {predicted_price[0]:,.0f} PKR")
+
+print("--- 4. SAVING THE MODEL ---")
+# This permanently saves the trained AI to our hard drive
+joblib.dump(ai_model, "05_Machine_Learning/real_estate_model.pkl")
+print("Brain frozen and saved as real_estate_model.pkl!")
