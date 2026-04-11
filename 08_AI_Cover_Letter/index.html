@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cover Letter Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #219a52;
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        #result-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+            border-radius: 4px;
+            white-space: pre-wrap; /* Keeps the line breaks from the AI */
+            display: none;
+            line-height: 1.6;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #e67e22;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 AI Cover Letter Generator</h1>
+    <p class="subtitle">Powered by Google Gemini 2.5 Flash</p>
+
+    <div class="container">
+        <label for="resume">1. Paste Your Resume Here:</label>
+        <textarea id="resume" placeholder="Paste your skills, experience, and education..."></textarea>
+
+        <label for="job">2. Paste the Job Description:</label>
+        <textarea id="job" placeholder="Paste the requirements from the job posting..."></textarea>
+
+        <button id="generate-btn" onclick="generateLetter()">Generate Cover Letter</button>
+        
+        <div class="loader" id="loader">⚙️ AI is writing your letter... please wait.</div>
+
+        <div id="result-box"></div>
+    </div>
+
+    <script>
+        async function generateLetter() {
+            const resumeText = document.getElementById("resume").value;
+            const jobText = document.getElementById("job").value;
+            const resultBox = document.getElementById("result-box");
+            const loader = document.getElementById("loader");
+            const btn = document.getElementById("generate-btn");
+
+            if (!resumeText || !jobText) {
+                alert("Please fill in both fields!");
+                return;
+            }
+
+            // UI Updates: Disable button and show loading text
+            btn.disabled = true;
+            loader.style.display = "block";
+            resultBox.style.display = "none";
+
+            try {
+                // Talk to our FastAPI Backend
+                const response = await fetch("http://127.0.0.1:8000/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        resume: resumeText,
+                        job_description: jobText
+                    })
+                });
+
+                const data = await response.json();
+
+                // UI Updates: Show result and reset button
+                resultBox.innerText = data.cover_letter;
+                resultBox.style.display = "block";
+            } catch (error) {
+                resultBox.innerText = "Error: Could not connect to the server. Make sure your Python API is running!";
+                resultBox.style.display = "block";
+            }
+
+            btn.disabled = false;
+            loader.style.display = "none";
+        }
+    </script>
+</body>
+</html>
