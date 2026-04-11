@@ -1,41 +1,52 @@
-# 🚀 Full-Stack Real Estate AI Prediction Engine
+# 🚀 Full-Stack Machine Learning & AI Portfolio
 
-A complete end-to-end Machine Learning solution designed to predict property prices in the Twin Cities (Islamabad/Rawalpindi) using real-world market data. This project covers the entire software lifecycle: from raw data cleaning and model training to cloud-hosted API deployment and a custom web interface.
-
----
-
-## 🔗 Live Demo & Links
-* **Live API Endpoint:** [https://machine-learning-al2p.onrender.com](https://machine-learning-al2p.onrender.com)
-* **Interactive UI:** Open `07_Real_Estate_Frontend/index.html` locally to query the live cloud model.
-* **API Documentation:** [https://machine-learning-al2p.onrender.com/docs](https://machine-learning-al2p.onrender.com/docs)
+A collection of end-to-end AI and Machine Learning applications covering the entire software lifecycle: from data engineering and model training to third-party LLM integration, secure cloud deployment, and custom front-end interfaces.
 
 ---
 
-## 🛠️ Tech Stack
-* **Language:** Python 3.14+, JavaScript, HTML5, CSS3
-* **Machine Learning:** Scikit-Learn (Linear Regression), Joblib
-* **Data Science:** Pandas, NumPy, Matplotlib, Seaborn
-* **Backend:** FastAPI (High-performance Python framework), Uvicorn
-* **Cloud DevOps:** Render (Deployment), GitHub Actions (CI/CD)
+## 🛠️ Project 1: Twin Cities Real Estate AI Engine
+A complete Machine Learning pipeline designed to predict property prices in Islamabad/Rawalpindi using real-world market data. 
+
+* **Live API Endpoint:** [https://machine-learning-al2p.onrender.com/docs](https://machine-learning-al2p.onrender.com/docs)
+* **Tech Stack:** Python, Scikit-Learn (Linear Regression), Pandas, FastAPI, HTML/JS.
+* **Architecture Highlights:**
+    * **Data Engineering:** Ingested and cleaned 100k+ rows of local real estate data, handling outliers and feature engineering.
+    * **Model Training:** Mapped `Area_Marla` and `Bedrooms` to market valuation, serialized as a `.pkl` file.
+    * **Cloud API:** Robust FastAPI backend with CORS middleware for secure cross-origin requests.
 
 ---
 
-## 🏗️ Project Architecture
+## 📝 Project 2: AI Cover Letter Generator (Micro-SaaS)
+An AI-powered web tool that acts as an expert technical recruiter, generating highly tailored cover letters by cross-referencing a user's resume with a specific job description.
 
-The project is organized into a modular pipeline to ensure scalability and professional organization:
+* **Live Web App:** [https://Huzai134.github.io/Machine-Learning/08_AI_Cover_Letter/index.html](https://Huzai134.github.io/Machine-Learning/08_AI_Cover_Letter/index.html)
+* **Live API Endpoint:** [https://machine-learning-2-iri6.onrender.com/docs](https://machine-learning-2-iri6.onrender.com/docs)
+* **Tech Stack:** Google Gemini 2.0 Flash API, Python, FastAPI, GitHub Pages.
+* **Architecture Highlights:**
+    * **LLM Integration:** Built a secure bridge to Google's Gemini models using modern SDKs.
+    * **Prompt Engineering:** Engineered strict system instructions to enforce professional formatting and dynamic data injection.
+    * **Security:** Safely managed environment variables (`.env`) to protect private API keys during Render cloud deployment.
 
-* **01-02_Python_Core:** Foundational logic, memory-efficient generators, and optimized data structures.
-* **03_Data_Engineering:** Ingesting 100k+ rows of Pakistan Real Estate data. Handled missing values, outliers, and feature engineering.
-* **04_Exploratory_Data_Analysis:** Statistical visualization of price trends across different cities and property types.
-* **05_Machine_Learning:** Training a predictive model. Used Scikit-Learn to map `Area_Marla` and `Bedrooms` to market valuation. The model is "frozen" as a `.pkl` file for production.
-* **06_Cloud_API:** A robust FastAPI server that loads the AI "brain" and serves predictions via JSON. Includes **CORS middleware** to allow secure cross-origin web requests.
-* **07_Interactive_Frontend:** A sleek, modern web UI that allows users to get instant AI-generated valuations without touching a single line of code.
-
----
-
+------
 ## 🚀 How to Run Locally
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/Huzai134/Machine-Learning.git](https://github.com/Huzai134/Machine-Learning.git)
+git clone https://github.com/Huzai134/Machine-Learning.git
 cd Machine-Learning
+```
+
+### 2. Set up the Backend (Example: Cover Letter API)
+```bash
+cd 08_AI_Cover_Letter
+pip install -r requirements.txt
+uvicorn server:app --reload
+```
+
+## 👨‍💻 About the Developer
+
+Muhammad Huzaifa Farooqui | Computer Science (BSCS '27) @ National University of Modern Languages (NUML)
+
+I specialize in building bridges between complex back-end logic and user-friendly interfaces. Currently focused on Machine Learning architectures, Full-Stack Web Development, and API integrations.
+
+GitHub: https://github.com/Huzai134
